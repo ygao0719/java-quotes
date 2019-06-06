@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class App {
     public static void main(String[] args){
@@ -16,15 +15,16 @@ public class App {
             Gson gson = new Gson();
 
             BufferedReader json =  new BufferedReader(new FileReader("/Users/ayga/Desktop/code fellows/401/labs/java-quotes/src/main/resources/recentquotes.json"));
-            Article[] article = gson.fromJson(json, Article[].class);
-            String output = Arrays.toString(article);
+            Quote[] quote = gson.fromJson(json, Quote[].class);
+
+            int random = (int)(Math.random() * quote.length);
+            Quote output = quote[random];
+
             System.out.println(output);
 
         } catch (IOException e){
             e.printStackTrace();
         }
-
-
     }
 
 }

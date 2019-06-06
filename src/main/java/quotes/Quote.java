@@ -3,12 +3,12 @@ package quotes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Article {
+public class Quote {
     String[] tags;
     String author;
     String likes;
     String text;
-    public Article(String[] tags, String author, String likes, String text){
+    public Quote(String[] tags, String author, String likes, String text){
 
         this.tags = tags;
         this.author = author;
