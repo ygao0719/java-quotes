@@ -3,12 +3,28 @@
  */
 package quotes;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
+    public static void main(String[] args){
+        try {
+            Gson gson = new Gson();
+
+            BufferedReader json =  new BufferedReader(new FileReader("/Users/ayga/Desktop/code fellows/401/labs/java-quotes/src/main/resources/recentquotes.json"));
+            Article[] article = gson.fromJson(json, Article[].class);
+            String output = Arrays.toString(article);
+            System.out.println(output);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-    }
 }
