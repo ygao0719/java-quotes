@@ -28,9 +28,9 @@ public class AppTest {
             Quote output = quote[random];
             assertTrue(output.toString().contains(output.getAuthor()));
             assertTrue(output.toString().contains(output.getText()));
+            
         }catch (IOException e){
             e.printStackTrace();
-
         }
     }
 }
