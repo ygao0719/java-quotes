@@ -27,7 +27,7 @@ public class Quote {
         return this.text;
     }
     public String toString(){
-        return String.format("The quote %s is written by %s",this.text,this.author);
+        return String.format("The quote %s \n is written by %s",this.text,this.author);
     }
 
 }

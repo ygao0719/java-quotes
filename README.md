@@ -10,13 +10,12 @@ objects that you do not have source-code of.
 
 ### Download
     Gradle:
-
     dependencies {
       implementation 'com.google.code.gson:gson:2.8.5'
     }
     
-    Maven:
     
+    Maven:
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
