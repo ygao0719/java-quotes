@@ -14,7 +14,7 @@ public class App {
         try {
             Gson gson = new Gson();
 
-            BufferedReader json =  new BufferedReader(new FileReader("/Users/ayga/Desktop/code fellows/401/labs/java-quotes/src/main/resources/recentquotes.json"));
+            BufferedReader json =  new BufferedReader(new FileReader("../../../resources/recentquotes.json"));
             Quote[] quote = gson.fromJson(json, Quote[].class);
 
             int random = (int)(Math.random() * quote.length);
