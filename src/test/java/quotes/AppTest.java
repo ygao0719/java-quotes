@@ -3,12 +3,33 @@
  */
 package quotes;
 
+import com.google.gson.Gson;
 import org.junit.Test;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 import static org.junit.Assert.*;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+    //after getQuote does the last quote is stored in the file
+    @Test
+    public void test_getQuote() {
+        App instanceForTest = new App();
+        try {
+
+            instanceForTest.getQuote();
+
+            Gson gson = new Gson();
+
+            BufferedReader json = new BufferedReader(new FileReader("./resources/recentquotes.json"));
+            Quote[] quote = gson.fromJson(json, Quote[].class);
+
+            assertEquals(quote[quote.length-1].quoteText,instanceForTest.getQuote());
+
+        }catch (FileNotFoundException e){
+            System.out.println(e);
+        }
     }
 }

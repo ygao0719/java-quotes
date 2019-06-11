@@ -5,16 +5,16 @@ package quotes;
 
 import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
 
     public static void main(String[] args) {
-        System.out.println(new App().getQuote());
+        System.out.println(getQuote());
     }
 
     public static String getQuote(){
@@ -25,27 +25,46 @@ public class App {
             BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
             Gson gson = new Gson();
-            Quote quote = gson.fromJson(reader, Quote.class);
-            return quote.quoteText;
+            Quote quoteFromApi = gson.fromJson(reader, Quote.class);
+
+            //get all quotes from file
+            BufferedReader json = new BufferedReader(new FileReader("./resources/recentquotes.json"));
+            Quote[] quote = gson.fromJson(json, Quote[].class);
+
+            //add all quotes into list
+            List<Quote> quoteList = new ArrayList<>();
+
+            for (int i = 0; i < quote.length; i++){
+                quoteList.add(quote[i]);
+            }
+
+            //add the quote from API into list
+            quoteList.add(quoteFromApi);
+
+            //write quote list to file and change to Json
+            FileWriter fileWriter = new FileWriter("./resources/recentquotes.json");
+            gson.toJson(quoteList, fileWriter);
+            fileWriter.close();
+
+            return quoteFromApi.quoteText;
 
         }catch (IOException e){
             System.out.println(e);
-            return "Two is ";
+            try {
+                Gson gson = new Gson();
+
+                BufferedReader json = new BufferedReader(new FileReader("./resources/recentquotes.json"));
+                Quote[] quote = gson.fromJson(json, Quote[].class);
+
+                int random = (int) (Math.random() * quote.length);
+                return quote[random].text;
+
+            }catch (FileNotFoundException e1){
+                System.out.println(e1);
+                return "File not found";
+            }
         }
 
     }
 }
-//        try {
-//            Gson gson = new Gson();
-//
-//            BufferedReader json =  new BufferedReader(new FileReader("./resources/recentquotes.json"));
-//            Quote[] quote = gson.fromJson(json, Quote[].class);
-//            int random = (int)(Math.random() * quote.length);
-//            Quote output = quote[random];
-//
-//            System.out.println(output);
-//
-//        } catch (IOException e){
-//            e.printStackTrace();
-//        }
 
