@@ -1,4 +1,4 @@
-# java-quotes
+# Java-quotes
 The app shows the quote and the author when it is run. The app should choose one
 quote each time it is run.
 

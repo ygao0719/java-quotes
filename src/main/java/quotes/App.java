@@ -6,26 +6,46 @@ package quotes;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class App {
-    public static void main(String[] args){
-        try {
-            Gson gson = new Gson();
 
-            BufferedReader json =  new BufferedReader(new FileReader("./resources/recentquotes.json"));
-            Quote[] quote = gson.fromJson(json, Quote[].class);
-//                /Users/ayga/Desktop/code fellows/401/labs/java-quotes/src/main/resources/recentquotes.json
-//                /Users/ayga/Desktop/code fellows/401/labs/java-quotes/src/main/java/quotes/App.java
-            int random = (int)(Math.random() * quote.length);
-            Quote output = quote[random];
-
-            System.out.println(output);
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+    public static void main(String[] args) {
+        System.out.println(new App().getQuote());
     }
 
+    public static String getQuote(){
+        try {
+            URL url = new URL("http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+            Gson gson = new Gson();
+            Quote quote = gson.fromJson(reader, Quote.class);
+            return quote.quoteText;
+
+        }catch (IOException e){
+            System.out.println(e);
+            return "Two is ";
+        }
+
+    }
 }
+//        try {
+//            Gson gson = new Gson();
+//
+//            BufferedReader json =  new BufferedReader(new FileReader("./resources/recentquotes.json"));
+//            Quote[] quote = gson.fromJson(json, Quote[].class);
+//            int random = (int)(Math.random() * quote.length);
+//            Quote output = quote[random];
+//
+//            System.out.println(output);
+//
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
+

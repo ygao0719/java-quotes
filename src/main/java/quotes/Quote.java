@@ -1,19 +1,18 @@
 package quotes;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Quote {
     String[] tags;
     String author;
     String likes;
-    String text;
+    String quoteText;
+
     public Quote(String[] tags, String author, String likes, String text){
 
         this.tags = tags;
         this.author = author;
         this.likes = likes;
-        this.text = text;
+        this.quoteText = text;
     }
     public String getAuthor(){
         return this.author;
@@ -24,10 +23,10 @@ public class Quote {
     }
 
     public String getText(){
-        return this.text;
+        return this.quoteText;
     }
     public String toString(){
-        return String.format("The quote %s \n is written by %s",this.text,this.author);
+        return String.format("The quote %s \n is written by %s",this.quoteText,this.author);
     }
 
 }
