@@ -30,12 +30,14 @@ public class App {
             //get all quotes from file
             BufferedReader json = new BufferedReader(new FileReader("./resources/recentquotes.json"));
             Quote[] quote = gson.fromJson(json, Quote[].class);
+
             //add all quotes into list
             List<Quote> quoteList = new ArrayList<>();
 
             for (int i = 0; i < quote.length; i++){
                 quoteList.add(quote[i]);
             }
+
             //add the quote from API into list
             quoteList.add(quoteFromApi);
 
