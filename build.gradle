@@ -30,4 +30,4 @@ dependencies {
 }
 
 // Define the main class for the application
-mainClassName = 'java.quotes.App'
+mainClassName = 'quotes.App'
