@@ -8,13 +8,12 @@ public class Quote {
     String text;
     String quoteText;
 
-    public Quote(String[] tags, String author, String likes, String text,String quoteText){
+    public Quote(String[] tags, String author, String likes, String text){
 
         this.tags = tags;
         this.author = author;
         this.likes = likes;
         this.text = text;
-        this.quoteText = quoteText;
 
     }
     public String getAuthor(){
