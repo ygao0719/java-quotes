@@ -36,7 +36,7 @@ public class AppTest {
     public void test_IOFile() {
         try {
             Gson gson = new Gson();
-
+            Quote quote = new Quote(,"harry","2 likes","If we expect to “know” the truth");
             FileWriter fileWriter = new FileWriter("./resources/test.json");
             gson.toJson(quoteList, fileWriter);
             fileWriter.close();
