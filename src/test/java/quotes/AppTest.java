@@ -6,30 +6,62 @@ package quotes;
 import com.google.gson.Gson;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static org.junit.Assert.*;
 
 public class AppTest {
-    //after getQuote does the last quote is stored in the file
+    //test getting something from API
     @Test
     public void test_getQuote() {
-        App instanceForTest = new App();
-        try {
+    try {
+            URL url = new URL("http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
-            instanceForTest.getQuote();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
             Gson gson = new Gson();
+            Quote quoteFromApi = gson.fromJson(reader, Quote.class);
 
-            BufferedReader json = new BufferedReader(new FileReader("./resources/recentquotes.json"));
-            Quote[] quote = gson.fromJson(json, Quote[].class);
+            assertNotNull(quoteFromApi.quoteText);
+        }catch(IOException e){
+            System.out.println(e);
+        }
 
-            assertEquals(quote[quote.length-1].quoteText,instanceForTest.getQuote());
+    }
 
-        }catch (FileNotFoundException e){
+    // test that proves quotes can be added to your file.
+    @Test
+    public void test_IOFile() {
+        try {
+            Gson gson = new Gson();
+            String[] newTags = new String[]{"funny"};
+            Quote quote = new Quote(newTags,"harry","2 likes","If we expect to “know” the truth");
+            FileWriter fileWriter = new FileWriter("./resources/test.json");
+            gson.toJson(quote, fileWriter);
+            fileWriter.close();
+
+        } catch (IOException e) {
             System.out.println(e);
         }
     }
+
+
 }
+//        App instanceForTest = new App();
+//        try {
+//
+//            instanceForTest.getQuote();
+//
+//            Gson gson = new Gson();
+//
+//            BufferedReader json = new BufferedReader(new FileReader("./resources/recentquotes.json"));
+//            Quote[] quote = gson.fromJson(json, Quote[].class);
+//
+//            assertEquals(quote[quote.length-1].quoteText,instanceForTest.getQuote());
+//
+//        }catch (FileNotFoundException e){
+//            System.out.println(e);
+//        }
